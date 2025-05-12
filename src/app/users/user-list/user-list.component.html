@@ -1,0 +1,25 @@
+<h2>Gestione utenti</h2>
+<button [routerLink]="['/users/create']">Crea nuovo utente</button>
+<div>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cognome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.surname }}</td>
+            <td>
+                <button (click)="viewUser(user.id)">Dettagli utente</button>
+                <button (click)="editUser(user.id)">Modifica utente</button>
+                <button (click)="deleteUser(user.id)">Elimina utente</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>

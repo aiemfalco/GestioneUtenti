@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+h2 {
+    font-family: helvetica;
+    font-size: 20px;
+}
+
+p {
+    font-family: helvetica;
+    font-size: 16px;
+}
+
+button {
+    margin-left: 20px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+  }
+  
+  button:hover {
+    background-color: #0275f0;
+  }
+
+  form {
+    max-width: 300px;
+  }
+  
+  label {
+    display:block;
+    color: #333;
+  }
+  
+  input {
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid black;
+  }

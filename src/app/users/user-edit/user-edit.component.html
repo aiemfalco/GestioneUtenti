@@ -1,0 +1,34 @@
+
+<h2>Modifica Utente</h2>
+<form *ngIf = "userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<div>
+  <label>Nome:</label>
+  <input type="text" formControlName="name" [value]="userForm.get('name')?.value | titlecase">
+  <div *ngIf="userForm.get('name')?.touched && userForm.get('name')?.invalid">
+  <small>Il campo nome è obbligatorio!</small>
+  </div>
+
+  <label> Cognome: </label>
+  <input type="text" formControlName="surname" [value]="userForm.get('surname')?.value | titlecase">
+  <div *ngIf="userForm.get('surname')?.touched && userForm.get('surname')?.invalid">
+  <small>Il campo cognome è obbligatorio!</small>
+  </div>
+
+  <label> Email: </label>
+  <input type="email" formControlName="email">
+  <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+    <small *ngIf="userForm.get('email')?.errors?.['required']">Il campo email è obbligatorio!</small>
+    <small *ngIf="userForm.get('email')?.errors?.['email']">Il formato email non è valido</small>
+  </div>
+
+  <label>Phone:</label>
+  <input type="text" formControlName="phone"/>
+  <div *ngIf="userForm.get('phone')?.touched && userForm.get('phone')?.invalid">
+    <small>Il campo telefono è obbligatorio!</small>
+  </div>
+</div>
+
+  <button type="submit" [disabled]="userForm.invalid">Salva</button>
+  </form>
+
+

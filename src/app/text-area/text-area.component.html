@@ -1,0 +1,15 @@
+
+<div class="form-group">
+  <label>{{ label }}</label>
+  <input type="text"
+         class="form-control"
+         [formControl]="control"
+         [placeholder]="placeholder">
+
+  <small *ngIf=" control | errorMessage as error">
+    {{ error }}
+  </small>
+</div>
+
+
+

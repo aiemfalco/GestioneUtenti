@@ -1,0 +1,22 @@
+
+<h2>Crea nuovo utente</h2>
+<form *ngIf = "userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<div>
+  <label>Nome:</label>
+  <input type="text" formControlName="name" placeholder="Name">
+   <small>{{userForm.get('name') | errorMessage}}</small>
+
+  <label> Cognome: </label>
+  <input type="text" formControlName="surname" placeholder="Surname">
+  <small>{{userForm.get('surname') | errorMessage}}</small>
+
+  <label> Email: </label>
+  <input type="email" formControlName="email" placeholder="Email">
+  <small>{{userForm.get('email') | errorMessage}}</small>
+
+  <label>Phone:</label>
+  <input type="text" formControlName="phone" placeholder="Phone">
+  <small>{{userForm.get('phone') | errorMessage}}</small>
+</div>
+<button type="submit" [disabled]="userForm.invalid">Salva</button>
+</form>
