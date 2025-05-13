@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { CommonModule } from '@angular/common';
+import { TextAreaComponent } from '../../text-area/text-area.component';
 
 @Component({
   selector: 'app-user-edit',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
@@ -31,6 +32,7 @@ export class UserEditComponent implements OnInit {
     this._userService.getUserById(this.userID).subscribe(user => {
       this.user = user;
       // inizializzo lo userForm con i valori del user selezionato
+      console.log(user);
       this.userForm = this._fb.group({
         id: [user.id],
         name: [user.name, Validators.required],

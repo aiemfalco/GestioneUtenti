@@ -1,15 +1,12 @@
-
 <div class="form-group">
   <label>{{ label }}</label>
   <input type="text"
-         class="form-control"
-         [formControl]="control"
-         [placeholder]="placeholder">
-
-  <small *ngIf=" control | errorMessage as error">
-    {{ error }}
-  </small>
+    class="form-control"
+    [placeholder]="placeholder"
+    [value]="value"
+    (input)="handleInput(input.value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    #input
+  />
 </div>
-
-
-

@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { ErrorMessagePipe } from '../error-message.pipe';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-text-area',
-  imports: [CommonModule, ErrorMessagePipe, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './text-area.component.html',
   styleUrl: './text-area.component.css',
   providers: [
@@ -16,38 +15,22 @@ import { ErrorMessagePipe } from '../error-message.pipe';
     }
   ]
 })
+
 export class TextAreaComponent implements ControlValueAccessor {
 
   @Input() label!: string;
-  @Input() formGroup!: FormGroup;
-  @Input() formControlName!: string;
   @Input() placeholder: string = '';
 
-  private _value: string = '';
+  @Input() value = '';
+  @Input() disabled = false;
+  @Output() valueChange = new EventEmitter<string>();
 
-  get control(): FormControl {
-    return this.formGroup.get(this.formControlName) as FormControl
-  }
-
-    // Getter and Setter for the form control value
-  get value(): string {
-    return this._value;
-  }
-
-  set value(val: string) {
-    this._value = val;
-    this.onChange(val); // Notify form about the change
-  }
-
-  // On change callback to propagate the changes
   onChange: any = () => {};
-
-  // On touch callback to track if the field was touched
   onTouched: any = () => {};
 
   writeValue(value: string): void {
     if (value !== undefined) {
-      this._value = value;
+      this.value = value;
     }
   }
 
@@ -57,6 +40,16 @@ export class TextAreaComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
+  handleInput(value: string) {
+    this.value = value;
+    this.onChange(value);
+    this.valueChange.emit(value);
   }
 }
 

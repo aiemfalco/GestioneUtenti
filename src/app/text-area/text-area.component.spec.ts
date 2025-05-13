@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TextAreaComponent } from './text-area.component';
 
 describe('TextAreaComponent', () => {

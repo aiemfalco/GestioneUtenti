@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ErrorMessagePipe } from "../../error-message.pipe";
+import { TextAreaComponent } from '../../text-area/text-area.component';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ErrorMessagePipe],
+  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
 })
@@ -40,6 +40,7 @@ export class UserCreateComponent {
   }
 
   onSubmit(): void {
+    console.log(this.userForm.value)
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
@@ -56,5 +57,5 @@ export class UserCreateComponent {
     this._userService.createUser(formattedUser).subscribe({
         next: () => this._router.navigate(['/users'])
     });
-}
+  }
 }
