@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 
 @Component({
-  selector: 'app-user-create',
   standalone: true,
+  selector: 'app-user-create',
   imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
@@ -31,6 +31,7 @@ export class UserCreateComponent {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
     });
+    console.log(this.userForm.value)
   }
 
   capitalize(value:string): string {

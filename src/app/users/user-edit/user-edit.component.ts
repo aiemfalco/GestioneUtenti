@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 
 @Component({
-  selector: 'app-user-edit',
   standalone: true,
+  selector: 'app-user-edit',
   imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
