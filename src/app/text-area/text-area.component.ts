@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Optional, Output, Self } from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { ErrorMessageService } from './error-message.service';
+import { CustomFormControl } from '../CustomFormControl';
 @Component({
   standalone: true,
   selector: 'app-text-area',
@@ -17,11 +19,24 @@ export class TextAreaComponent implements ControlValueAccessor {
   @Input() disabled = false;
   @Output() valueChange = new EventEmitter<string>(); // comunica i cambiamenti al componente padre (UserEdit/UserCreate)
 
-  constructor(@Optional() @Self() public ngControl: NgControl)
+  constructor(@Optional() @Self() public ngControl: NgControl, private _errorMessageService: ErrorMessageService)
   {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
+  }
+
+  get control(): CustomFormControl | null {
+    return this.ngControl?.control as CustomFormControl;
+  }
+
+  get errorMessage() : string | null {
+    return this.control?.errorMessage ?? null;
+  }
+
+  get shouldShowError(): boolean {
+    const ctrl = this.control;
+    return !!(ctrl && ctrl.invalid && (ctrl.dirty || ctrl.touched));
   }
 
   onChange = (_:any)=> {};
@@ -48,47 +63,6 @@ export class TextAreaComponent implements ControlValueAccessor {
     this.onChange(value);
     this.valueChange.emit(value);
   }
-
-  /* get errorMessage(): string | null {
-  
-  const control = this.ngControl?.control;
-  if (!control || !control.invalid || !control.touched)
-    return null;
-
-  if (control.errors?.['required']) {
-    return `Il campo ${this.label} è obbligatorio`;
-  }
-  if (control.errors?.['email']) {
-    return `Inserisci un indirizzo email valido`;
-  }
-  if (control.errors?.['minlength']) {
-    return `${this.label} deve avere almeno ${control.errors['minlength'].requiredLength} caratteri`;
-  }
-  if (control.errors?.['maxlength']) {
-    return `${this.label} può avere al massimo ${control.errors['maxlength'].requiredLength} caratteri`;
-  }
-
-  return 'Campo non valido';
-} */
-
-get errorMessage(): string | null {
-  const control = this.ngControl?.control;
-  if (!control || !control.invalid || !control.touched) return null;
-
-  const errors = control.errors!;
-  const messages: { [key: string]: string } = {
-    required: `Il campo ${this.label} è obbligatorio`,
-    email: `Inserisci un indirizzo email valido`,
-    minlength: `${this.label} deve avere almeno ${errors['minlength']?.requiredLength} caratteri`,
-    maxlength: `${this.label} può avere al massimo ${errors['maxlength']?.requiredLength} caratteri`
-  };
-
-  for (const key of Object.keys(errors)) {
-    if (messages[key]) return messages[key];
-  }
-
-  return 'Campo non valido';
-}
 
 }
 

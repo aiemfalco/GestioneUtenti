@@ -8,5 +8,7 @@
     (blur)="onTouched()"
     [disabled]="disabled"
     #input />
-   <div class="text-danger" *ngIf="errorMessage"> {{ errorMessage }} </div> 
+   <div class="text-danger" *ngIf="shouldShowError"> 
+    {{ errorMessage }} 
+  </div> 
 </div>

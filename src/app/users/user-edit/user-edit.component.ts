@@ -5,6 +5,8 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
+import { ErrorMessageService } from '../../text-area/error-message.service';
+import { CustomFormBuilder } from '../../CustomFormBuilder';
 
 @Component({
   standalone: true,
@@ -16,7 +18,6 @@ import { TextAreaComponent } from '../../text-area/text-area.component';
 export class UserEditComponent implements OnInit {
 
   user!: User;
-  validationErrors: any = {};
   userID!: number;
   userForm!: FormGroup;
 
@@ -24,23 +25,28 @@ export class UserEditComponent implements OnInit {
     private _fb: FormBuilder,
     private _route: ActivatedRoute,
     private _userService: UserService,
-    private _router: Router
+    private _router: Router, 
+    private _errorService: ErrorMessageService
   ) {}
 
   ngOnInit(): void {
     this.userID = +this._route.snapshot.paramMap.get('id')!;
     this._userService.getUserById(this.userID).subscribe(user => {
       this.user = user;
-      // inizializzo lo userForm con i valori del user selezionato
       console.log(user);
-      this.userForm = this._fb.group({
-        id: [user.id],
-        name: [user.name, Validators.required],
-        surname: [user.surname, Validators.required],
-        email: [user.email, [Validators.required, Validators.email]],
-        phone: [user.phone, Validators.required]
-      });
+      this.userForm = new CustomFormBuilder(this._errorService).group({
+            name: {label:'Nome', value: user.name, validators: [Validators.required]},
+            surname: {label: 'Cognome', value: user.surname, validators: [Validators.required]},
+            email: {label: 'Email', value: user.email, validators: [Validators.required, Validators.email]},
+            phone: {label: 'Telefono', value: user.phone, validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]} // non funziona solo qui
+        })
     });
+  }
+
+  capitalize(value:string): string {
+    return value
+    .toLowerCase()
+    .replace(/\b\w/g, char => char.toUpperCase());
   }
 
   onSubmit(): void {
