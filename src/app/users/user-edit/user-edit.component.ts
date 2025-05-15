@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 import { ErrorMessageService } from '../../text-area/error-message.service';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
+import { formatUser } from '../../shared/string-utils';
 
 @Component({
   standalone: true,
@@ -20,9 +21,9 @@ export class UserEditComponent implements OnInit {
   user!: User;
   userID!: number;
   userForm!: FormGroup;
-
+  
   constructor(
-    private _fb: FormBuilder,
+    private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
     private _route: ActivatedRoute,
     private _userService: UserService,
     private _router: Router, 
@@ -33,8 +34,8 @@ export class UserEditComponent implements OnInit {
     this.userID = +this._route.snapshot.paramMap.get('id')!;
     this._userService.getUserById(this.userID).subscribe(user => {
       this.user = user;
-      this.userForm = new CustomFormBuilder(this._errorService).group({
-            name: {label:'Nome', value: user.name, validators: [Validators.required]},
+      this.userForm = this._Customfb.group({
+            name: {label:'Nome', value: user.name, validators: [Validators.required]}, // specificare Validators in modo da avere un array di oggetti con il message o il default 
             surname: {label: 'Cognome', value: user.surname, validators: [Validators.required]},
             email: {label: 'Email', value: user.email, validators: [Validators.required, Validators.email]},
             phone: {label: 'Telefono', value: user.phone, validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}
@@ -42,16 +43,11 @@ export class UserEditComponent implements OnInit {
     });
   }
 
-  capitalize(value:string): string {
-    return value
-    .toLowerCase()
-    .replace(/\b\w/g, char => char.toUpperCase());
-  }
-
   onSubmit(): void {
-    this._userService.updateUser(this.userID, this.userForm.value).subscribe({
+    const formattedUser = formatUser(this.userForm.value);
+    this._userService.updateUser(this.userID, formattedUser).subscribe({
       next: () => this._router.navigate(['/users']),
       error: err => console.error('Errore durante la PUT: ', err)
-    });
+  });
   }
 }

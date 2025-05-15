@@ -7,8 +7,10 @@ import { ValidationErrors } from '@angular/forms';
 export class ErrorMessageService {
 
   getErrorMessage(errors: ValidationErrors | null, _label?: string) : string | null {
+
     if (!errors) return null;
 
+    // messages in un json, in modo da caricarlo dinamicamente
     const messages: { [key: string]: (error?: any) => string } = {
     required: () => `Il campo ${_label} è obbligatorio`,
     email: () => 'Formato email non valido!',
