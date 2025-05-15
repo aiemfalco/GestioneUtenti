@@ -33,12 +33,11 @@ export class UserEditComponent implements OnInit {
     this.userID = +this._route.snapshot.paramMap.get('id')!;
     this._userService.getUserById(this.userID).subscribe(user => {
       this.user = user;
-      console.log(user);
       this.userForm = new CustomFormBuilder(this._errorService).group({
             name: {label:'Nome', value: user.name, validators: [Validators.required]},
             surname: {label: 'Cognome', value: user.surname, validators: [Validators.required]},
             email: {label: 'Email', value: user.email, validators: [Validators.required, Validators.email]},
-            phone: {label: 'Telefono', value: user.phone, validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]} // non funziona solo qui
+            phone: {label: 'Telefono', value: user.phone, validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}
         })
     });
   }

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 import { ErrorMessageService } from '../../text-area/error-message.service';
-import { CustomFormControl } from '../../CustomFormControl';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 
 @Component({
@@ -28,14 +27,12 @@ export class UserCreateComponent {
 
   ngOnInit(): void {
     // inizializzo lo userForm con i campi vuoti
-    console.log('sono dentro');
     this.userForm = new CustomFormBuilder(this._errorService).group({
       name: {label:'Nome', value: '', validators: [Validators.required]},
       surname: {label: 'Cognome', value: '', validators: [Validators.required]},
       email: {label: 'Email', value: '', validators: [Validators.required, Validators.email]},
-      phone: {label: 'Telefono', value: '', validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]} // non funziona solo qui
+      phone: {label: 'Telefono', value: '', validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}
     })
-    console.log(this.userForm.value)
   }
 
   capitalize(value:string): string {
@@ -45,7 +42,6 @@ export class UserCreateComponent {
   }
 
   onSubmit(): void {
-    console.log(this.userForm.value)
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
