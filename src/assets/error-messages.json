@@ -1,0 +1,5 @@
+{
+  "required": "Il campo {{label}} è obbligatorio",
+  "email": "Formato email non valido!",
+  "phone": "Il campo telefono richiede esattamente 10 caratteri"
+}

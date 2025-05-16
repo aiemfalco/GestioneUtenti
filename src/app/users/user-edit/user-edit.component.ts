@@ -8,6 +8,7 @@ import { TextAreaComponent } from '../../text-area/text-area.component';
 import { ErrorMessageService } from '../../text-area/error-message.service';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { formatUser } from '../../shared/string-utils';
+import { CustomValidators } from '../../CustomValidators';
 
 @Component({
   standalone: true,
@@ -26,8 +27,7 @@ export class UserEditComponent implements OnInit {
     private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
     private _route: ActivatedRoute,
     private _userService: UserService,
-    private _router: Router, 
-    private _errorService: ErrorMessageService
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,10 +35,10 @@ export class UserEditComponent implements OnInit {
     this._userService.getUserById(this.userID).subscribe(user => {
       this.user = user;
       this.userForm = this._Customfb.group({
-            name: {label:'Nome', value: user.name, validators: [Validators.required]}, // specificare Validators in modo da avere un array di oggetti con il message o il default 
-            surname: {label: 'Cognome', value: user.surname, validators: [Validators.required]},
-            email: {label: 'Email', value: user.email, validators: [Validators.required, Validators.email]},
-            phone: {label: 'Telefono', value: user.phone, validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}
+            name: {label:'Nome', value: user.name, validators: [CustomValidators.required()]},
+            surname: {label: 'Cognome', value: user.surname, validators: [CustomValidators.required()]},
+            email: {label: 'Email', value: user.email, validators: [CustomValidators.required(), CustomValidators.email()]},
+            phone: {label: 'Telefono', value: user.phone, validators: [CustomValidators.required(), CustomValidators.phone()]}
         })
     });
   }

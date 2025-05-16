@@ -14,9 +14,9 @@ export class CustomFormBuilder {
   group(controlsConfig: { [key: string]: { label: string, value: any, validators?: any[] } }): FormGroup {
 
     const controls: any = {};
-    for (const key in controlsConfig) {
+    for (const key in controlsConfig) { 
       const { label, value, validators } = controlsConfig[key];
-      controls[key] = new CustomFormControl(value, label, this._errorService, validators);
+      controls[key] = new CustomFormControl(value, label, this._errorService, validators); 
     }
 
     return new FormGroup(controls);

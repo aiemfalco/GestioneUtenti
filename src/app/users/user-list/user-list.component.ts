@@ -24,7 +24,6 @@ export class UserListComponent implements OnInit {
 
   loadUsers(): void {
     this._userService.getUsers().subscribe(data => {
-      console.log('Utenti caricati:', data);
       this.users = data;
     });
   }
@@ -40,6 +39,4 @@ export class UserListComponent implements OnInit {
   deleteUser(id:number): void {
     this._userService.deleteUser(id).subscribe(() => this.loadUsers());
   }
-
-
 }

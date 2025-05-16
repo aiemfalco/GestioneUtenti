@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
@@ -6,22 +7,28 @@ import { ValidationErrors } from '@angular/forms';
 })
 export class ErrorMessageService {
 
+  private _messages: { [key: string]: string} = {};
+
+  constructor(private _http: HttpClient) {
+    this.loadMessages();
+  }
+
+  private loadMessages() {
+    this._http.get<{ [key: string]: string}>('../../assets/error-messages.json')
+    .subscribe(messages => {
+      this._messages = messages; // popolo il dic dal json
+    });
+    
+  }
+
   getErrorMessage(errors: ValidationErrors | null, _label?: string) : string | null {
 
     if (!errors) return null;
 
-    // messages in un json, in modo da caricarlo dinamicamente
-    const messages: { [key: string]: (error?: any) => string } = {
-    required: () => `Il campo ${_label} è obbligatorio`,
-    email: () => 'Formato email non valido!',
-    minlength: (error)  => `Per il campo ${_label} sono richiesti ${error?.requiredLength} caratteri`,
-    maxlength: (error)  => `Per il campo ${_label} sono richiesti massimo ${error?.requiredLength} caratteri`,
-  };
-
     for (const errorKey of Object.keys(errors)) {
-      const getMessage = messages[errorKey];
+      const getMessage = this._messages[errorKey];
       if(getMessage) {
-        return getMessage(errors[errorKey]);
+        return getMessage.replace('{{label}}', _label ?? '');
       }
     }
 

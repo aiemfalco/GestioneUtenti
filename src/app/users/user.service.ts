@@ -19,8 +19,6 @@ export class UserService {
 
     constructor(private _http: HttpClient) {}
 
-    // private formattedDenomination(User): User {};
-
     // Ottieni la lista utenti 
     getUsers(): Observable<User[]>{
         return this._http.get<User[]>(this._apiURL);

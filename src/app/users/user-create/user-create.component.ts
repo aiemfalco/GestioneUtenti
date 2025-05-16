@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
-import { ErrorMessageService } from '../../text-area/error-message.service';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
-import { capitalize, formatUser } from '../../shared/string-utils';
+import { formatUser } from '../../shared/string-utils';
+import { CustomValidators } from '../../CustomValidators';
 
 @Component({
   standalone: true,
@@ -22,16 +22,15 @@ export class UserCreateComponent {
   constructor(
     private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
     private _userService: UserService,
-    private _router: Router,
-    private _errorService: ErrorMessageService
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
     this.userForm = this._Customfb.group({
-      name: {label:'Nome', value: '', validators: [Validators.required]},
-      surname: {label: 'Cognome', value: '', validators: [Validators.required]},
-      email: {label: 'Email', value: '', validators: [Validators.required, Validators.email]},
-      phone: {label: 'Telefono', value: '', validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]}
+      name: {label:'Nome', value: '', validators: [CustomValidators.required()]},
+      surname: {label: 'Cognome', value: '', validators: [CustomValidators.required()]},
+      email: {label: 'Email', value: '', validators: [CustomValidators.required(), CustomValidators.email()]},
+      phone: {label: 'Telefono', value: '', validators: [CustomValidators.required(), CustomValidators.phone()]}
     })
   }
 
