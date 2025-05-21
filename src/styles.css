@@ -9,8 +9,18 @@ p {
     font-size: 16px;
 }
 
+table {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+table td, th {
+  padding: 5px;
+}
+
 button {
     margin-left: 20px;
+    margin-top: 5px;
     padding: 5px 10px;
     border-radius: 6px;
     border: none;

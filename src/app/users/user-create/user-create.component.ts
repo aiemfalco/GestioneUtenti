@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TextAreaComponent } from '../../text-area/text-area.component';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
-import { formatUser } from '../../shared/string-utils';
+import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
 
 @Component({

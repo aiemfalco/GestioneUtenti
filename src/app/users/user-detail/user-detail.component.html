@@ -1,8 +1,8 @@
-<h2>Dettagli utente</h2>
-<div *ngIf = "user">
-    <p>ID: {{user.id}} </p>
-    <p>Nome: {{user.name}} </p>
-    <p>Cognome: {{user.surname}} </p>
-    <p>Telefono: {{user.phone}} </p>
-    <p>Email: {{user.email}} </p>
-</div>
+
+@if(user) {
+    <p>Id: {{user.id}}</p>
+    <p>Nome: {{user.name}}</p>
+    <p>Cognome: {{user.surname}}</p>
+    <p>Telefono: {{user.phone}}</p>
+    <p>Email: {{user.email}}</p>
+}
