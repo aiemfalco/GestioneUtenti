@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
-import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TextAreaComponent } from '../../text-area/text-area.component';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
+import { TextAreaComponent } from '../../text-area/text-area.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   standalone: true,
   selector: 'app-user-create',
-  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
+  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent, ButtonModule],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
 })
@@ -35,6 +36,8 @@ export class UserCreateComponent {
   }
 
   onSubmit(): void {
+    console.log(this.userForm.value);
+    console.log(this.userForm.valid); // tutto ok
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;

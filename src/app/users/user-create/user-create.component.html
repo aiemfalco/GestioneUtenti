@@ -1,8 +1,8 @@
 <h2>Crea nuovo utente</h2>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <app-text-area label="Nome" placeholder="Nome" formControlName="name"></app-text-area>
-  <app-text-area label="Cognome" placeholder="Cognome" formControlName="surname"></app-text-area>
-  <app-text-area label="Email" placeholder="Email" formControlName="email"></app-text-area>
-  <app-text-area label="Telefono" placeholder="Telefono" formControlName="phone"></app-text-area>
-  <button type="submit" [disabled]="userForm.invalid">Salva</button>
+  <app-text-area label="Nome" formControlName="name"></app-text-area>
+  <app-text-area label="Cognome" formControlName="surname"></app-text-area>
+  <app-text-area label="Email" formControlName="email"></app-text-area>
+  <app-text-area label="Telefono" formControlName="phone"></app-text-area>
+  <p-button label="Salva" styleClass="my-custom-btn" type="submit" [disabled]="userForm.invalid"></p-button>
 </form>

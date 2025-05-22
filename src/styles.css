@@ -28,10 +28,10 @@ button {
     background-color: #007bff;
   }
   
-  button:hover {
+button:hover {
     background-color: #0275f0;
   }
-
+  
   form {
     max-width: 300px;
   }

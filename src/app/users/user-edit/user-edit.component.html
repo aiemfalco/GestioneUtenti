@@ -2,11 +2,12 @@
   <h2>Modifica Utente #{{user.id}}</h2>
   @if (userForm) {
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-  <app-text-area label="Nome" placeholder="Nome" [(value)] = "user.name" formControlName="name"></app-text-area>
-  <app-text-area label="Cognome" placeholder="Cognome" [(value)]="user.surname" formControlName="surname"></app-text-area>
-  <app-text-area label="Email" placeholder="Email" [(value)]="user.email" formControlName="email"></app-text-area>  
-  <app-text-area label="Telefono" placeholder="Telefono" [(value)]="user.phone" formControlName="phone"></app-text-area>
-  <button type="submit" [disabled]="userForm.invalid">Salva</button>
+  <app-text-area label="Nome" [(value)] = "user.name" formControlName="name"></app-text-area>
+  <app-text-area label="Cognome" [(value)]="user.surname" formControlName="surname"></app-text-area>
+  <app-text-area label="Email" [(value)]="user.email" formControlName="email"></app-text-area>  
+  <app-text-area label="Telefono" [(value)]="user.phone" formControlName="phone"></app-text-area>
+  <!--<p-button label="Salva" styleClass="my-custom-btn" type="submit" [disabled]="userForm.invalid"></p-button> -->
+  <p-button label="Salva" icon="pi pi-check" iconPos="right" type="submit" [disabled]="userForm.invalid" styleClass="my-custom-btn"/>
   </form>
 }
 }

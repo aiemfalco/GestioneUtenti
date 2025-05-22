@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { UserListComponent } from "./users/user-list/user-list.component";
-
+import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { PrimeNG } from 'primeng/config';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -9,6 +8,11 @@ import { UserListComponent } from "./users/user-list/user-list.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'GestioneUtenti';
+export class AppComponent implements OnInit {
+
+  constructor(private _primeng: PrimeNG) {}
+
+  ngOnInit(): void {
+      this._primeng.ripple.set(true);
+  }
 }

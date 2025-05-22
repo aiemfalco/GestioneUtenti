@@ -9,11 +9,11 @@ import { ErrorMessageService } from '../../text-area/error-message.service';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
-
+import { ButtonModule } from 'primeng/button';
 @Component({
   standalone: true,
   selector: 'app-user-edit',
-  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent],
+  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent, ButtonModule],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })

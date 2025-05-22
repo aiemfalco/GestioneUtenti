@@ -1,28 +1,5 @@
-
-input {
-    margin-top: 10px;
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
+::ng-deep .my-custom-btn {
+    background-color: rgb(0, 174, 255);
+    padding: 10px;
     border-radius: 6px;
-  }
-
-  form {
-    max-width: 300px;
-    margin-top: 20px;
-  }
-
-  button[type="submit"] {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #218838;
-  }
+}

@@ -1,13 +1,17 @@
+
 <div class="form-group">
   <label>{{ label }}</label>
-  <input type="text"
-    class="form-control"
-    [placeholder]="placeholder"
-    [value]="value"
-    (input)="handleInput(input.value)"
-    (blur)="onTouched()"
-    [disabled]="disabled"
-    #input />
+  <textarea
+  pInputTextarea
+  rows="1"
+  cols="30"
+  class="form-control"
+  [value]="value"
+  (input)="handleInput(input.value)"
+  (blur)="onTouched()"
+  [disabled]="disabled"
+  #input>
+  </textarea>
    <div class="text-danger" *ngIf="shouldShowError"> 
     {{ errorMessage }} 
   </div> 
