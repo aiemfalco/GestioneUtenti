@@ -1,5 +1,5 @@
 ::ng-deep .my-custom-btn {
-    background-color: rgb(0, 174, 255);
-    padding: 10px;
-    border-radius: 6px;
+    background-color: slateblue;
+    padding: 12px;
+    border-radius: 8px;
 }

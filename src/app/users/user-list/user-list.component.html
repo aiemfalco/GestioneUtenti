@@ -14,9 +14,9 @@
             <td>{{user.name}}</td>
             <td>{{user.surname}}</td>
             <td>
-                <p-button icon="pi pi-user" (click)="viewUser(user.id)" styleClass="my-custom-btn" />
-                <p-button icon="pi pi-refresh" iconPos="right" (click)="editUser(user.id)" styleClass="my-custom-btn" />
-                <p-button icon="pi pi-times" severity="danger" styleClass="my-custom-btn" (click)="deleteUser(user.id)" />
+                <p-button label="Dettagli" (click)="viewUser(user.id)" styleClass="my-custom-btn"/>
+                <p-button label="Modifica" (click)="editUser(user.id)"styleClass="my-custom-btn"/>
+                <p-button label="Elimina" (click)="deleteUser(user.id)"styleClass="my-custom-btn"/>
             </td>
             </tr>
         }
@@ -24,7 +24,8 @@
 </table>
 </div>
 
-<div>
+<div class="borderdiv">
     Crea un nuovo utente: 
-    <p-button label="Nuovo utente" [routerLink]="['/users/create']" />
+    <p-button label="Nuovo utente" [routerLink]="['/users/create']" styleClass="my-custom-btn"/>
+    <p-button label="Test" icon="pi pi-check" iconPos="right" />
 </div>

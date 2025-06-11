@@ -25,7 +25,6 @@
                 "src/favicon.ico"
             ],
             "styles": [
-              "../GestioneUtenti/node_modules/primeicons/primeicons.css",
               "src/styles.css"
             ],
             "scripts": [],

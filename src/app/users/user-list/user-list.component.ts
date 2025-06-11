@@ -11,7 +11,7 @@ import { ButtonModule } from 'primeng/button';
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css'
+  styleUrl: './user-list.component.css',
 })
 export class UserListComponent implements OnInit {
 
