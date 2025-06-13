@@ -1,14 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-export const routes: Routes = [
+export const ROUTES: Routes = [
     { path: '', redirectTo: '/users', pathMatch: 'full' },
     { path: 'users', loadChildren: () =>
-        import('./users/users.routs').then(m => m.USER_ROUTES) }
+        import('./users/users.routs').then(m => m.USER_ROUTES) } // andrà a caricare la UserList
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(ROUTES)],
     exports: [RouterModule]
 })
 

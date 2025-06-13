@@ -5,11 +5,12 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule, TableModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
@@ -17,7 +18,9 @@ export class UserListComponent implements OnInit {
 
   users: User[] = []
 
-  constructor(private _userService: UserService, private _router: Router) {}
+  constructor(
+    private _userService: UserService, 
+    private _router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();

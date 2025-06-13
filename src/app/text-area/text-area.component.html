@@ -1,8 +1,9 @@
 
 <div class="form-group">
+
   <label>{{ label }}</label>
   <textarea
-  pInputTextarea
+  pInputText
   rows="1"
   cols="30"
   class="form-control"
@@ -12,6 +13,7 @@
   [disabled]="disabled"
   #input>
   </textarea>
+
    <div class="text-danger" *ngIf="shouldShowError"> 
     {{ errorMessage }} 
   </div> 
