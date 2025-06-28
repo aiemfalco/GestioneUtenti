@@ -1,7 +1,8 @@
+
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { ErrorMessageService } from './error-message.service';
+// import { ErrorMessageService } from './error-message.service';
 import { CustomFormControl } from '../CustomFormControl';
 import { InputTextModule } from 'primeng/inputtext';
 @Component({
@@ -18,9 +19,9 @@ export class TextAreaComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
   @Input() value = ''; 
   @Input() disabled = false;
-  @Output() valueChange = new EventEmitter<string>(); // comunica i cambiamenti al componente padre (UserEdit/UserCreate)
+  @Output() valueChange = new EventEmitter<string>(); // comunica i cambiamenti al componente padre che utilizza TextAreaComponent (UserEdit/UserCreate)
 
-  constructor(@Optional() @Self() public ngControl: NgControl, private _errorMessageService: ErrorMessageService)
+  constructor(@Optional() @Self() public ngControl: NgControl /*private _errorMessageService: ErrorMessageService*/)
   {
     if (this.ngControl)
     {

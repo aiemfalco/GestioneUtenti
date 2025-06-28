@@ -1,0 +1,18 @@
+<div class="container">
+  <p-autoComplete
+    [(ngModel)]="value"
+    (ngModelChange)="onChange($event)"
+    [suggestions]="filtered"
+    [field]="field"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [dropdown]="dropdown"
+    [forceSelection]="forceSelection"
+    (completeMethod)="onFilter($event)"
+    (onSelect)="onItemSelect($event)">
+  </p-autoComplete>
+  
+  <div class="text-danger" *ngIf="errorMessage"> 
+      {{ errorMessage }} 
+  </div> 
+</div>

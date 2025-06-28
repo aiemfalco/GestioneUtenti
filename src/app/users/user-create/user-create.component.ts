@@ -1,24 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { formatUser } from '../../shared/string.utils';
-import { CustomValidators } from '../../CustomValidators';
-import { TextAreaComponent } from '../../text-area/text-area.component';
 import { ButtonModule } from 'primeng/button';
+/* wrapped components */
+import { CustomFormBuilder } from '../../CustomFormBuilder';
+import { CustomValidators } from '../../CustomValidators';
+import { MyAutocompleteComponent } from "../../my-autocomplete/my-autocomplete.component";
 
 @Component({
   standalone: true,
   selector: 'app-user-create',
-  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent, ButtonModule],
+  imports: [ReactiveFormsModule, CommonModule, ButtonModule, MyAutocompleteComponent],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css'
 })
-export class UserCreateComponent {
+export class UserCreateComponent implements OnInit {
 
   userForm!: FormGroup;
+  names = ['Mario', 'Marco', 'Maria', 'Martina', 'Michele'];
+  names_suggested = [...this.names];
 
   constructor(
     private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
@@ -28,24 +31,30 @@ export class UserCreateComponent {
 
   ngOnInit(): void {
     this.userForm = this._Customfb.group({
-      name: {label:'Nome', value: '', validators: [CustomValidators.required()]},
-      surname: {label: 'Cognome', value: '', validators: [CustomValidators.required()]},
-      email: {label: 'Email', value: '', validators: [CustomValidators.required(), CustomValidators.email()]},
-      phone: {label: 'Telefono', value: '', validators: [CustomValidators.required(), CustomValidators.phone()]}
+      name: {label:'Nome', value: '', validators: [CustomValidators.required()], useCustomControl: true},
+      surname: {label: 'Cognome', value: '', validators: [CustomValidators.required()], useCustomControl: true},
+      email: {label: 'Email', value: '', validators: [CustomValidators.required(), CustomValidators.email()], useCustomControl: true},
+      phone: {label: 'Telefono', value: '', validators: [CustomValidators.required(), CustomValidators.phone()], useCustomControl: true}
     })
   }
 
   onSubmit(): void {
-    console.log(this.userForm.value);
-    console.log(this.userForm.valid); // tutto ok
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
     }
 
     const formattedUser = formatUser(this.userForm.value);
-    this._userService.createUser(formatUser(formattedUser)).subscribe({
+    this._userService.createUser(formattedUser).subscribe({
         next: () => this._router.navigate(['/users'])
     });
   }
+
+  // metodo per il filter
+  onNameSearch(query: string): void {
+    const lower = query.toLowerCase();
+    this.names_suggested = this.names.filter(n =>
+      n.toLowerCase().includes(lower)
+    );
+  } 
 }

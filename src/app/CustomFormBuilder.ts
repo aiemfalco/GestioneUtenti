@@ -1,5 +1,5 @@
-import { FormGroup } from '@angular/forms';
-import { ErrorMessageService } from './text-area/error-message.service';
+import { FormControl, FormGroup } from '@angular/forms';
+//import { ErrorMessageService } from './text-area/error-message.service'; crea dipendenza circolare
 import { CustomFormControl } from './CustomFormControl';
 import { Injectable } from '@angular/core';
 
@@ -8,9 +8,23 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class CustomFormBuilder {
+  
+  constructor(/*private _errorService: ErrorMessageService*/) {}
 
-  constructor(private _errorService: ErrorMessageService) {}
+ group(controlsConfig: {[key: string]: { value: any, label: string, validators: any[], useCustomControl?: boolean } }): FormGroup {
+  const group: any = {};
+  for (const key in controlsConfig) {
+    const config = controlsConfig[key];
 
+    group[key] = config.useCustomControl === false
+      ? new FormControl(config.value, config.validators)                   
+      : new CustomFormControl(config.value, config.label, config.validators); 
+    }
+    return new FormGroup(group);
+  }
+}
+
+/*
   group(controlsConfig: { [key: string]: { label: string, value: any, validators?: any[] } }): FormGroup {
 
     const controls: any = {};
@@ -21,4 +35,4 @@ export class CustomFormBuilder {
 
     return new FormGroup(controls);
   }
-}
+*/

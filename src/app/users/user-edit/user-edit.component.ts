@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { CommonModule } from '@angular/common';
+// import { ErrorMessageService } from '../../text-area/error-message.service';
 import { TextAreaComponent } from '../../text-area/text-area.component';
-import { ErrorMessageService } from '../../text-area/error-message.service';
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
 import { ButtonModule } from 'primeng/button';
+// import { MyAutocompleteComponent } from "../../my-autocomplete/my-autocomplete.component";
 @Component({
   standalone: true,
   selector: 'app-user-edit',
-  imports: [ReactiveFormsModule, CommonModule, TextAreaComponent, ButtonModule],
+  imports: [ReactiveFormsModule, CommonModule, ButtonModule, TextAreaComponent],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
@@ -22,6 +23,7 @@ export class UserEditComponent implements OnInit {
   user!: User;
   userID!: number;
   userForm!: FormGroup;
+  names_suggested = ['Mario', 'Marco', 'Maria', 'Martina', 'Michele'];
   
   constructor(
     private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
