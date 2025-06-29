@@ -49,12 +49,4 @@ export class UserCreateComponent implements OnInit {
         next: () => this._router.navigate(['/users'])
     });
   }
-
-  // metodo per il filter
-  onNameSearch(query: string): void {
-    const lower = query.toLowerCase();
-    this.names_suggested = this.names.filter(n =>
-      n.toLowerCase().includes(lower)
-    );
-  } 
 }

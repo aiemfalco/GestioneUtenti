@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, Component, EventEmitter, forwardRef, inject, Inject, Input, Optional, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, Inject, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR, NgControl, AbstractControl } from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 @Component({
@@ -18,8 +18,8 @@ import {AutoCompleteModule} from 'primeng/autocomplete';
 })
 export class MyAutocompleteComponent implements ControlValueAccessor, AfterContentInit {
 
-  @Input() suggestions: any[] = [];
-  @Input() field: string = 'label';
+  @Input() suggestions: any[] = []; // riceverà names dal padre
+  @Input() field: string = ''; // input del componente valorizzato da fuori
   @Input() placeholder: string = '';
   @Input() disabled: boolean = false; // serve a disattivare il componente(true)
   @Input() dropdown: boolean = true; // serve a mostrare il bottone freccia per mostrare le suggestions
@@ -28,7 +28,7 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   @Output() completeMethod = new EventEmitter<string>();
   @Output() onSelect = new EventEmitter<any>();
 
-  private _control: AbstractControl | null = null;
+  private _control: AbstractControl | null = null; // non viene inizializzata correttamente
 
   get control(): AbstractControl | null {
     return this._control;
@@ -37,7 +37,7 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   value: any;
   filtered: any[] = []; // suggestions filtered
 
-  // avevo dipendenza circolare perchè...
+  //costruttore vuoto->ngControl non viene mai assegnato->this._control è null
   constructor() {}
 
   ngAfterContentInit(): void {
@@ -46,7 +46,19 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
     ngControl.valueAccessor = this;
     this._control = ngControl.control;
   }
-}
+} 
+
+  /* NgControl va iniettato per forza nel costruttore ma non usato!
+  constructor(@Optional() @Self() @Inject(NgControl) private _ngControl: NgControl | null) {}
+
+  //_control viene inizializzato dopo la fase di content init in quando angular ha già completato
+  // l'injection del form control
+  ngAfterContentInit(): void {
+  if (this._ngControl) {
+    this._ngControl.valueAccessor = this;
+    this._control = this._ngControl.control;
+  }
+} */
 
   // interfaccia di ControlValueAccessor
   onChange = (_: any) => {};
@@ -70,7 +82,7 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   
   // metodo per filtrare i suggerimenti
   onFilter(event: any) {
-    console.log('onFilter chiamato con: ', event.query);
+    // console.log("I'm in onFilter ", this.suggestions);
     const query = event.query.toLowerCase();
     this.filtered = this.suggestions.filter(s =>
     typeof s === 'string' ? s.toLowerCase().includes(query)
@@ -85,43 +97,17 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   }
 
   // gestione degli errori spostata nel componente
- get errorMessage(): string | null {
-  // eliminata la dipendenza da CustomFormControl e anche da ErrorMessageService
-  if (!this._control || !(this._control.dirty || this._control.touched)) return null;
+  get errorMessage(): string | null {
+    // eliminata la dipendenza da CustomFormControl e anche da ErrorMessageService
+    if (!this._control || !(this._control.dirty || this._control.touched)) return null;
 
-  const errors = this._control.errors;
-  if (!errors) return null;
+    const errors = this._control.errors;
+    if (!errors) return null;
 
-  if (errors['required']) return `${this.placeholder || 'Campo obbligatorio'} è obbligatorio.`;
-  if (errors['email']) return `Email non valida`;
-  if (errors['phone']) return `Numero di telefono non valido`;
+    if (errors['required']) return `${this.placeholder || 'Campo obbligatorio'} è obbligatorio.`;
+    if (errors['email']) return `Email non valida`;
+    if (errors['phone']) return `Numero di telefono non valido`;
 
-  return 'Errore non specificato';
-  }
+    return 'Errore non specificato';
+    }
 }
-
-
-
-
-
-
-  /*get control() {
-    return this._ngControl?.control;
-  }
-
-  get touched(): boolean {
-    return this.control?.touched ?? false;
-  }
-
-  get dirty(): boolean {
-    return this.control?.dirty ?? false;
-  }
-
-  get invalid(): boolean {
-    return this.control?.invalid ?? false;
-  }
-
-  get errors(): any {
-    return this.control?.errors;
-  } */
-
