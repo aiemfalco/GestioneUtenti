@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, Component, EventEmitter, forwardRef, Inject, Input, Optional, Output, Self } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, Inject, Injector, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR, NgControl, AbstractControl } from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 @Component({
@@ -28,7 +28,7 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   @Output() completeMethod = new EventEmitter<string>();
   @Output() onSelect = new EventEmitter<any>();
 
-  private _control: AbstractControl | null = null; // non viene inizializzata correttamente
+  private _control: AbstractControl | null = null; // non viene inizializzata correttamente -> non fa funzionare errorMessage
 
   get control(): AbstractControl | null {
     return this._control;
@@ -37,7 +37,23 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   value: any;
   filtered: any[] = []; // suggestions filtered
 
-  //costruttore vuoto->ngControl non viene mai assegnato->this._control è null
+  constructor(private injector: Injector) {}
+  // In questo modo Angular non cerca subito di risolvere NgControl quando crea il componente,
+  // ma lo ottiene solo dopo, quando il ciclo di vita è già avviato: niente più dipendenza circolare
+  ngAfterContentInit(): void {
+    const ngControl = this.injector.get(NgControl, null);
+    if (ngControl) {
+      ngControl.valueAccessor = this;
+      this._control = ngControl.control;
+      //console.log("control:", this._control);
+    } else {
+      console.warn("NgControl non trovato");
+    }
+}
+
+
+
+  /* costruttore vuoto->ngControl non viene mai assegnato->this._control è null
   constructor() {}
 
   ngAfterContentInit(): void {
@@ -46,7 +62,9 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
     ngControl.valueAccessor = this;
     this._control = ngControl.control;
   }
-} 
+
+  console.log("valore di control in ngAfterContentInit: ", this.control);
+} */
 
   /* NgControl va iniettato per forza nel costruttore ma non usato!
   constructor(@Optional() @Self() @Inject(NgControl) private _ngControl: NgControl | null) {}
@@ -57,6 +75,9 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   if (this._ngControl) {
     this._ngControl.valueAccessor = this;
     this._control = this._ngControl.control;
+    console.log("Valore di control: ", this.control);
+  } else {
+   console.warn("NgControl non trovato");
   }
 } */
 
@@ -99,9 +120,10 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   // gestione degli errori spostata nel componente
   get errorMessage(): string | null {
     // eliminata la dipendenza da CustomFormControl e anche da ErrorMessageService
-    if (!this._control || !(this._control.dirty || this._control.touched)) return null;
+    //console.log("valore di control in errorMessage: ", this.control);
+    if (!this.control || !(this.control.dirty || this.control.touched)) return null;
 
-    const errors = this._control.errors;
+    const errors = this.control.errors;
     if (!errors) return null;
 
     if (errors['required']) return `${this.placeholder || 'Campo obbligatorio'} è obbligatorio.`;

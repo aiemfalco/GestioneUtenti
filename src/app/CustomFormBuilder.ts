@@ -11,7 +11,7 @@ export class CustomFormBuilder {
   
   constructor(/*private _errorService: ErrorMessageService*/) {}
 
- group(controlsConfig: {[key: string]: { value: any, label: string, validators: any[], useCustomControl?: boolean } }): FormGroup {
+ group(controlsConfig: {[key: string]: { value: any, label: string, validators?: any[], useCustomControl?: boolean } }): FormGroup {
   const group: any = {};
   for (const key in controlsConfig) {
     const config = controlsConfig[key];

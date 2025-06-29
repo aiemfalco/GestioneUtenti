@@ -31,10 +31,10 @@ export class CustomFormControl extends FormControl {
 }
 }
 
-    /* errroMessage che ora grazie alla label può emettere messaggi d'errore personalizzati e non generici
-    get errorMessage(): string | null {
+/* errroMessage che ora grazie alla label può emettere messaggi d'errore personalizzati e non generici
+get errorMessage(): string | null {
 
-        if (!this.errors || !(this.touched || this.dirty)) return null;
+    if (!this.errors || !(this.touched || this.dirty)) return null;
 
-        return this._errorService.getErrorMessage(this.errors, this._label);
-    } */
+    return this._errorService.getErrorMessage(this.errors, this._label);
+} */
