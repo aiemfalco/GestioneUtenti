@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, Component, EventEmitter, forwardRef, Inject, Injector, Input, Optional, Output, Self } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, Injector, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR, NgControl, AbstractControl } from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 @Component({
@@ -21,14 +21,15 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   @Input() suggestions: any[] = []; // riceverà names dal padre
   @Input() field: string = ''; // input del componente valorizzato da fuori
   @Input() placeholder: string = '';
-  @Input() disabled: boolean = false; // serve a disattivare il componente(true)
+  @Input() disabled: boolean = false; // serve a disattivare il componente(se true)
   @Input() dropdown: boolean = true; // serve a mostrare il bottone freccia per mostrare le suggestions
-  @Input() forceSelection: boolean = false; // (false) fa accettare input diversi dalle suggestions
+  @Input() forceSelection: boolean = false; // (se false) fa accettare input diversi dalle suggestions
+  @Input() showClear: boolean = true; // icona per pulire il campo
 
   @Output() completeMethod = new EventEmitter<string>();
   @Output() onSelect = new EventEmitter<any>();
 
-  private _control: AbstractControl | null = null; // non viene inizializzata correttamente -> non fa funzionare errorMessage
+  private _control: AbstractControl | null = null;
 
   get control(): AbstractControl | null {
     return this._control;
@@ -50,10 +51,8 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
       console.warn("NgControl non trovato");
     }
 }
-
-
-
   /* costruttore vuoto->ngControl non viene mai assegnato->this._control è null
+  // opzione 1
   constructor() {}
 
   ngAfterContentInit(): void {
