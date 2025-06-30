@@ -1,5 +1,13 @@
 @import 'primeicons/primeicons.css';
 
+body.dark-mode {
+  --surface-a: #1e1e1e;
+  --surface-b: #2c2c2c;
+  --text-color: black;
+  background-color: var(--surface-a);
+  color: var(--text-color);
+}
+
 h2 {
     font-family: helvetica;
     font-size: 20px;
@@ -19,32 +27,30 @@ table td, th {
 }
 
 button {
-    margin-left: 20px;
-    margin-top: 5px;
-    padding: 5px 10px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    background-color: #007bff;
+  margin-left: 20px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
 }
   
 button:hover {
     background-color: #0275f0;
 }
   
-form {
-    max-width: 300px;
-  }
+form {max-width: 300px;}
   
-  label {
-    display:block;
-    color: #333;
-  }
+label {
+  display:block;
+  color: #333;
+}
   
-  input {
-    width: 100%;
-    padding: 6px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    border: 1px solid black;
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid black;
   }

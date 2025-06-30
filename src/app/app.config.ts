@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Nora,
         options: {
-          darkModeSelector: false || 'none'
+          darkModeSelector: 'body.dark-mode'
         }
       }
     })
