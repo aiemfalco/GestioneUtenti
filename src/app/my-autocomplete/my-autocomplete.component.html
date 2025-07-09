@@ -13,7 +13,7 @@
     (onSelect)="onItemSelect($event)">
   </p-autoComplete>
   
-  <div class="text-danger" *ngIf="errorMessage"> 
-      {{ errorMessage }} 
+  <div class="text-danger" *ngIf="control?.invalid"> 
+      {{ control?.errorMessage }} 
   </div> 
 </div>
