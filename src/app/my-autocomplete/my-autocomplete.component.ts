@@ -3,6 +3,8 @@ import { AfterContentInit, Component, EventEmitter, forwardRef, Injector, Input,
 import { ControlValueAccessor, FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { CustomFormControl } from '../CustomFormControl';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core'; // signals -> add reactivity
 @Component({
   selector: 'app-my-autocomplete',
   standalone: true,
@@ -15,13 +17,24 @@ import { CustomFormControl } from '../CustomFormControl';
       useExisting: forwardRef(() => MyAutocompleteComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyAutocompleteComponent implements ControlValueAccessor, AfterContentInit {
 
-  @Input() suggestions: any[] = []; // riceverà names dal padre
+  // @Input() suggestions: any[] = []; // riceverà names dal padre
+  private _suggestions = signal<any[]>([]);
+
+  @Input()
+  set suggestions(value: any[]) {
+    this._suggestions.set(value);
+  }
+  get suggestions() {
+    return this._suggestions();
+  }
+
   @Input() field: string = ''; // input del componente valorizzato da fuori
-  @Input() placeholder: string = '';
+  @Input() placeholder: string = ''; // testo in sovraimpressione nel form  
   @Input() disabled: boolean = false; // serve a disattivare il componente(se true)
   @Input() dropdown: boolean = true; // serve a mostrare il bottone freccia per mostrare le suggestions
   @Input() forceSelection: boolean = false; // (se false) fa accettare input diversi dalle suggestions
@@ -36,18 +49,18 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
     return this._control;
   }
 
-  value: any;
-  filtered: any[] = []; // suggestions filtered
+  value = signal<any>(null);
+  filtered = signal<any[]>([]);
 
-  constructor(private injector: Injector) {}
-  // In questo modo Angular non cerca subito di risolvere NgControl quando crea il componente,
-  // ma lo ottiene solo dopo, quando il ciclo di vita è già avviato: niente più dipendenza circolare
+  // In questo modo Angular non cerca subito di risolvere NgControl quando crea il componente MyAutoComplete
+  // ma lo ottiene solo dopo, quando il ciclo di vita è già avviato: niente più errore di dipendenza circolare
+  constructor(private injector: Injector) {} 
+
   ngAfterContentInit(): void {
     const ngControl = this.injector.get(NgControl, null);
     if (ngControl) {
       ngControl.valueAccessor = this;
       this._control = ngControl.control as CustomFormControl;
-      //console.log("control:", this._control);
     } else {
       console.warn("NgControl non trovato");
     }
@@ -57,7 +70,7 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   onTouched = () => {};
 
   writeValue(val: any): void {
-    this.value = val;
+    this.value.set(val);
   }
 
   registerOnChange(fn: any): void {
@@ -74,12 +87,11 @@ export class MyAutocompleteComponent implements ControlValueAccessor, AfterConte
   
   // metodo per filtrare i suggerimenti
   onFilter(event: any) {
-    // console.log("I'm in onFilter ", this.suggestions);
     const query = event.query.toLowerCase();
-    this.filtered = this.suggestions.filter(s =>
+    this.filtered.set(this.suggestions.filter(s =>
     typeof s === 'string' ? s.toLowerCase().includes(query)
                           : s[this.field]?.toLowerCase().includes(query)
-    );
+    ));
   }
 
   onItemSelect(event: any) {

@@ -2,7 +2,7 @@
   <p-autoComplete
     [(ngModel)]="value"
     (ngModelChange)="onChange($event)"
-    [suggestions]="filtered"
+    [suggestions]="filtered()"
     [field]="field"
     [placeholder]="placeholder"
     [disabled]="disabled"
