@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   isDark = false;
   defaultTheme: string = 'nora';
+  actualTheme: string = '';
   
   constructor(private _primeng: PrimeNG) {}
 
@@ -30,22 +31,34 @@ export class AppComponent implements OnInit {
       this.isDark = localStorage.getItem('dark-mode') === 'true';
       if (this.isDark) {
         document.body.classList.add('dark-mode');
+      }
+      // applica l'ultimo tema salvato oppure il tema di default 
+      const saved = localStorage.getItem('theme') || this.defaultTheme;
+      this.changeTheme(saved); 
+
     }
-    // ripristina il tema salvato al load
-    const saved = localStorage.getItem('theme') || 'nora';
-    this.changeTheme(saved);
-  }
 
   onThemeChange(event: Event) {
-  const value = (event.target as HTMLSelectElement).value;
-  if (value) {
-    this.changeTheme(value);
+    const value = (event.target as HTMLSelectElement).value;
+    if (value) {
+      console.log("tema cambiato in: ", value);
+      this.changeTheme(value);
+      this.actualTheme = value;
+    }
   }
-}
 
   changeTheme(presetName: string) {
-    this._primeng.theme.set(presetName);
-    localStorage.setItem('theme', presetName);
-  }
+    const themes = ['nora', 'lara', 'aura', 'material'];
+    if (themes.includes(presetName)) {
+      this._primeng.theme.set(presetName);
+      const body = document.body;
+      themes.forEach(t => body.classList.remove(t));
+      body.classList.add(presetName);
 
+      localStorage.setItem('theme', presetName);
+      console.log("tema impostato: ", presetName);
+    } else {
+      console.error('Tema non valido:', presetName);
+    }
+  }
 }

@@ -1,4 +1,5 @@
-<select [value] = "defaultTheme" (change)="onThemeChange($event)">
+
+<select [(ngModel)]="actualTheme" (change)="onThemeChange($event)">
   <option value="nora">Nora</option>
   <option value="lara">Lara</option>
   <option value="aura">Aura</option>
