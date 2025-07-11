@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PrimeNG } from 'primeng/config';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   isDark = false;
   defaultTheme: string = 'nora';
-  actualTheme: string = '';
+  actualTheme = this.defaultTheme;
   
   constructor(private _primeng: PrimeNG) {}
 
@@ -34,16 +34,18 @@ export class AppComponent implements OnInit {
       }
       // applica l'ultimo tema salvato oppure il tema di default 
       const saved = localStorage.getItem('theme') || this.defaultTheme;
+      console.log("tema caricato al log: ", saved);
       this.changeTheme(saved); 
-
     }
 
   onThemeChange(event: Event) {
     const value = (event.target as HTMLSelectElement).value;
+    console.log("value in onThemeChange: ", value);
     if (value) {
-      console.log("tema cambiato in: ", value);
       this.changeTheme(value);
+      console.log("tema cambiato in: ", value);
       this.actualTheme = value;
+      console.log("actualTheme aggiornato a: ", this.actualTheme);
     }
   }
 
@@ -54,11 +56,11 @@ export class AppComponent implements OnInit {
       const body = document.body;
       themes.forEach(t => body.classList.remove(t));
       body.classList.add(presetName);
-
       localStorage.setItem('theme', presetName);
-      console.log("tema impostato: ", presetName);
+      console.log("Tema impostato: ", presetName);
     } else {
       console.error('Tema non valido:', presetName);
     }
   }
+
 }

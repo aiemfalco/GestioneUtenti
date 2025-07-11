@@ -3,8 +3,7 @@ import { AfterContentInit, Component, EventEmitter, forwardRef, Injector, Input,
 import { ControlValueAccessor, FormsModule, ReactiveFormsModule, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { CustomFormControl } from '../CustomFormControl';
-import { ChangeDetectionStrategy } from '@angular/core';
-import { signal, WritableSignal } from '@angular/core'; // signals -> add reactivity
+import { signal } from '@angular/core'; // signals -> add reactivity
 @Component({
   selector: 'app-my-autocomplete',
   standalone: true,
@@ -17,8 +16,7 @@ import { signal, WritableSignal } from '@angular/core'; // signals -> add reacti
       useExisting: forwardRef(() => MyAutocompleteComponent),
       multi: true
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class MyAutocompleteComponent implements ControlValueAccessor, AfterContentInit {
 

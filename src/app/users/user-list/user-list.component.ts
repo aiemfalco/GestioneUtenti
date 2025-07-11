@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
 import { Router, RouterModule } from '@angular/router';
@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-user-list',
@@ -13,6 +14,7 @@ import { TableModule } from 'primeng/table';
   imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule, TableModule],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
 
@@ -20,7 +22,9 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private _userService: UserService, 
-    private _router: Router) {}
+    private _router: Router,
+    private _cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -29,6 +33,7 @@ export class UserListComponent implements OnInit {
   loadUsers(): void {
     this._userService.getUsers().subscribe(data => {
       this.users = data;
+      this._cd.markForCheck();
     });
   }
 
