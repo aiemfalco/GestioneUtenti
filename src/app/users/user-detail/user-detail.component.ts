@@ -2,15 +2,13 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User, UserService } from '../user.service';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './user-detail.component.css'
 })
 export class UserDetailComponent {
 

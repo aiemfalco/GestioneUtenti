@@ -3,9 +3,10 @@
 body.dark-mode {
   --surface-a: #1e1e1e;
   --surface-b: #2c2c2c;
-  --text-color: black;
+  --text-color: white;
   background-color: var(--surface-a);
   color: var(--text-color);
+
 }
 
 h2 {

@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { formatUser } from '../../shared/string.utils';
 import { ButtonModule } from 'primeng/button';
-import { ChangeDetectionStrategy } from '@angular/core';
 /* wrapped components */
 import { CustomFormBuilder } from '../../CustomFormBuilder';
 import { CustomValidators } from '../../CustomValidators';
@@ -16,13 +15,12 @@ import { MyAutocompleteComponent } from "../../my-autocomplete/my-autocomplete.c
   selector: 'app-user-create',
   imports: [ReactiveFormsModule, CommonModule, ButtonModule, MyAutocompleteComponent],
   templateUrl: './user-create.component.html',
-  styleUrl: './user-create.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './user-create.component.css'
 })
 export class UserCreateComponent implements OnInit {
 
   userForm!: FormGroup;
-  names = ['Mario', 'Marco', 'Maria', 'Martina', 'Michele'];
+  names = ['Mario', 'Marco', 'Maria', 'Martina', 'Michele']; // si potrebbero caricare da un servizio asincrono -> BehaviourSubject<string> oppure this._cd.markforCheck()
   names_suggested = [...this.names];
 
   constructor(

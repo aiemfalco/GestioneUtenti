@@ -9,7 +9,6 @@ import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
 import { ButtonModule } from 'primeng/button';
 import { MyAutocompleteComponent } from "../../my-autocomplete/my-autocomplete.component";
-import { ChangeDetectionStrategy } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-user-edit',
@@ -43,7 +42,7 @@ export class UserEditComponent implements OnInit {
             phone: {label: 'Telefono', value: user.phone, validators: [CustomValidators.required(), CustomValidators.phone()], useCustomControl: true}
         })
     });
-    this._cd.markForCheck();
+    //this._cd.markForCheck();
   }
 
   onSubmit(): void {

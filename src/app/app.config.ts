@@ -5,7 +5,8 @@ import { ROUTES } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
-import Nora from '@primeng/themes/nora';
+//import Nora from '@primeng/themes/nora';
+import {MyPreset} from '../mypreset';
 
 
 export const appConfig: ApplicationConfig = {
@@ -16,7 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Nora,
+        preset: MyPreset,
         options: {
           darkModeSelector: 'body.dark-mode'
         }

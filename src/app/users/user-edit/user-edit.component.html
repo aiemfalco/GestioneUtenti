@@ -1,16 +1,17 @@
-
-@if(user) {
-  <h2>Modifica Utente #{{user.id}}</h2>
-  @if (userForm) {
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <app-my-autocomplete formControlName="name" [suggestions] = "names_suggested" placeholder = "Nome"></app-my-autocomplete>
-    <app-my-autocomplete formControlName="surname" placeholder="Cognome"></app-my-autocomplete>
-    <app-my-autocomplete formControlName="email" placeholder="Email"></app-my-autocomplete>  
-    <app-my-autocomplete formControlName="phone" placeholder="Telefono"></app-my-autocomplete>
-    <p-button label="Salva" icon="pi pi-check" iconPos="right" type="submit" [disabled]="userForm.invalid" />
-  </form>
-}
-}
+<div class = "UserEdit">
+  @if(user) {
+    <h2>Modifica Utente #{{user.id}}</h2>
+    @if (userForm) {
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <app-my-autocomplete formControlName="name" [suggestions] = "names_suggested" placeholder = "Nome"></app-my-autocomplete>
+      <app-my-autocomplete formControlName="surname" placeholder="Cognome"></app-my-autocomplete>
+      <app-my-autocomplete formControlName="email" placeholder="Email"></app-my-autocomplete>  
+      <app-my-autocomplete formControlName="phone" placeholder="Telefono"></app-my-autocomplete>
+      <p-button label="Salva" icon="pi pi-check" iconPos="right" type="submit" [disabled]="userForm.invalid" />
+    </form>
+    }
+  }
+</div>
 
 
 

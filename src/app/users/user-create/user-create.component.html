@@ -1,5 +1,4 @@
-
-<div class="createUser">
+<div class = "UserCreate">
   <h2>Crea un nuovo utente</h2>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <app-my-autocomplete formControlName="name" [suggestions] = "names_suggested" placeholder = "Nome"></app-my-autocomplete>

@@ -6,15 +6,13 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule, TableModule],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './user-list.component.css'
 })
 export class UserListComponent implements OnInit {
 

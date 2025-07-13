@@ -1,0 +1,50 @@
+
+:root {
+  /* === Core colors === */
+  --primary-color: #ff4081;
+  --primary-color-text: #ffffff;
+  --primary-100: #ffe4ec;
+  --primary-200: #ffbcd0;
+  --primary-300: #ff93b3;
+  --primary-400: #ff6a96;
+  --primary-500: #ff4081; /* main */
+  --primary-600: #e03671;
+  --primary-700: #c02f62;
+  --primary-800: #a02753;
+  --primary-900: #802044;
+
+  /* === Surface & background === */
+  --surface-0: #1e1e2f;           /* Main background */
+  --surface-50: #2e2e3f;
+  --surface-100: #3e3e4f;
+  --surface-200: #4e4e5f;
+  --surface-300: #5e5e6f;
+  --surface-400: #6e6e7f;
+  --surface-500: #7e7e8f;
+  --surface-600: #8e8e9f;
+  --surface-700: #9e9eaf;
+  --surface-800: #aeaeaf;
+  --surface-900: #bebecf;
+
+  /* === Text colors === */
+  --text-color: #e0e0e0;
+  --text-color-secondary: #bbbbbb;
+  --text-color-disabled: #888888;
+
+  /* === Border & hover === */
+  --border-color: #3a3a4d;
+  --hover-bg: #2c2c3c;
+
+  /* === Buttons === */
+  --button-border-radius: 6px;
+  --button-padding: 0.5rem 1rem;
+
+  /* === Focus ring === */
+  --focus-ring: 0 0 0 0.2rem rgba(255, 64, 129, 0.5);
+
+  /* === Font === */
+  --font-family: 'Segoe UI', sans-serif;
+
+  /* === Misc === */
+  --disabled-opacity: 0.4;
+}
