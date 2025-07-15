@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
@@ -9,16 +9,18 @@ import { formatUser } from '../../shared/string.utils';
 import { CustomValidators } from '../../CustomValidators';
 import { ButtonModule } from 'primeng/button';
 import { MyAutocompleteComponent } from "../../my-autocomplete/my-autocomplete.component";
+import { ChangeDetectionStrategy } from '@angular/core';
 @Component({
   standalone: true,
   selector: 'app-user-edit',
   imports: [ReactiveFormsModule, CommonModule, ButtonModule, MyAutocompleteComponent],
   templateUrl: './user-edit.component.html',
-  styleUrl: './user-edit.component.css'
+  styleUrl: './user-edit.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserEditComponent implements OnInit {
 
-  user!: User;
+  user = signal<User | undefined>(undefined)
   userID!: number;
   userForm!: FormGroup;
   names_suggested = ['Mario', 'Marco', 'Maria', 'Martina', 'Michele']; // verrano filtrati dal onFilter presente in MyAutocomplete
@@ -27,14 +29,13 @@ export class UserEditComponent implements OnInit {
     private _Customfb: CustomFormBuilder, // inizializzato una sola volta 
     private _route: ActivatedRoute,
     private _userService: UserService,
-    private _router: Router,
-    private _cd: ChangeDetectorRef
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
     this.userID = +this._route.snapshot.paramMap.get('id')!;
     this._userService.getUserById(this.userID).subscribe(user => {
-      this.user = user;
+      this.user.set(user);
       this.userForm = this._Customfb.group({
             name: {label:'Nome', value: user.name, validators: [CustomValidators.required()], useCustomControl: true},
             surname: {label: 'Cognome', value: user.surname, validators: [CustomValidators.required()], useCustomControl: true},
@@ -42,7 +43,6 @@ export class UserEditComponent implements OnInit {
             phone: {label: 'Telefono', value: user.phone, validators: [CustomValidators.required(), CustomValidators.phone()], useCustomControl: true}
         })
     });
-    //this._cd.markForCheck();
   }
 
   onSubmit(): void {

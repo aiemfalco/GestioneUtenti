@@ -6,26 +6,33 @@ import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { usePreset } from '@primeng/themes';
+import { Select } from 'primeng/select';
+
+import Aura from '@primeng/themes/aura';
+import Lara from '@primeng/themes/lara';
+import Material from '@primeng/themes/material';
+import Nora from '@primeng/themes/nora'
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, ButtonModule, CommonModule, DropdownModule, FormsModule],
+  imports: [RouterModule, ButtonModule, CommonModule, DropdownModule, FormsModule, Select],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
 
   isDark = false;
-  defaultTheme: string = 'Nora';
-  actualTheme = this.defaultTheme; // signal computed?
+  actualTheme: object = Aura
   themes = [
-    { label: 'Nora', value: 'Nora' },
-    { label: 'Lara', value: 'Lara' },
-    { label: 'Aura', value: 'Aura' },
-    { label: 'Material', value: 'Material'}
+    { label: 'Aura', value: Aura }, 
+    { label: 'Lara', value: Lara }, 
+    { label: 'Material', value: Material }, 
+    { label: 'Nora', value: Nora }
   ];
-  
-  constructor(private _primeng: PrimeNG) {}
+
+  constructor(private _primeng: PrimeNG) {
+  }
 
   toggleTheme() {
     this.isDark = !this.isDark;
@@ -39,36 +46,21 @@ export class AppComponent implements OnInit {
       if (this.isDark) {
         document.body.classList.add('dark-mode');
       }
-      // applica l'ultimo tema salvato oppure il tema di default 
-      const saved = localStorage.getItem('theme') || this.defaultTheme;
-      console.log("Tema caricato al log: ", saved);
-      this.changeTheme(saved); 
+      // applica l'ultimo tema salvato
+      const storageItem = localStorage.getItem('theme');
+      if (storageItem) {
+        console.log("Tema caricato al log: ", storageItem);
+        this.changeTheme(this.themes.find(theme => theme.label === storageItem)!.value)
+      }
     }
-
-  onThemeChange(event: Event) {
-    const value = (event.target as HTMLSelectElement).value;
-    console.log("value in onThemeChange: ", value);
-    if (value) {
-      this.changeTheme(value);
-      console.log("Tema cambiato in: ", value);
-      this.actualTheme = value;
-      console.log("actualTheme aggiornato a: ", this.actualTheme);
-    }
+    
+  async changeTheme(preset: object) {
+      try {
+        await usePreset(preset);
+        this.actualTheme = preset
+        console.log('Preset' , preset, "applicato");
+      } catch (err) {
+        console.error('Errore nel cambio preset:', err);
+      }
   }
-
-  changeTheme(presetName: string) {
-    const themes = ['Nora', 'Lara', 'Aura', 'Material'];
-    if (themes.includes(presetName)) {
-      usePreset(presetName);
-      //this._primeng.theme.set(presetName);
-      const body = document.body;
-      themes.forEach(t => body.classList.remove(t));
-      body.classList.add(presetName);
-      localStorage.setItem('theme', presetName);
-      console.log("Tema impostato: ", presetName);
-    } else {
-      console.error('Tema non valido:', presetName);
-    }
-  }
-
 }

@@ -5,7 +5,6 @@ import { ROUTES } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
-//import Nora from '@primeng/themes/nora';
 import {MyPreset} from '../mypreset';
 
 

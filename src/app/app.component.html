@@ -1,12 +1,6 @@
-<select [(ngModel)]="actualTheme" (change)="onThemeChange($event)">
-  <option value="Nora">Nora</option>
-  <option value="Lara">Lara</option>
-  <option value="Aura">Aura</option>
-  <option value="Material">Material</option>
-</select> 
 
+<p-select [options]="themes" optionLabel="label" optionValue="value" [ngModel]="actualTheme" (ngModelChange)="changeTheme($event)" />
 <button pButton type="button" icon="pi pi-moon" (click)="toggleTheme()" *ngIf="!isDark"></button>
 <button pButton type="button" icon="pi pi-sun" (click)="toggleTheme()" *ngIf="isDark"></button>
 
 <router-outlet></router-outlet>
-

@@ -1,7 +1,7 @@
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 
-export const MyPreset = definePreset(Aura, {
+const MyPreset = definePreset(Aura, {
     semantic: {
         primary: {
             50: '{indigo.50}',
@@ -18,3 +18,5 @@ export const MyPreset = definePreset(Aura, {
         }
     }
 });
+
+export {MyPreset};

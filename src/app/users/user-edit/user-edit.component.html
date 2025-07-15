@@ -1,6 +1,7 @@
 <div class = "UserEdit">
-  @if(user) {
-    <h2>Modifica Utente #{{user.id}}</h2>
+  @let userValue = user();
+  @if(userValue) {
+    <h2>Modifica Utente #{{userValue.id}}</h2>
     @if (userForm) {
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <app-my-autocomplete formControlName="name" [suggestions] = "names_suggested" placeholder = "Nome"></app-my-autocomplete>
@@ -12,8 +13,6 @@
     }
   }
 </div>
-
-
 
 
 
