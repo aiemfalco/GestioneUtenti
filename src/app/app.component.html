@@ -1,5 +1,4 @@
-{{counter()}}
+<a [routerLink]="['/customizetheme']">Personalizza il tuo tema</a>
 <button pButton type="button" icon="pi pi-moon" (click)="toggleTheme()" *ngIf="!isDark"></button>
 <button pButton type="button" icon="pi pi-sun" (click)="toggleTheme()" *ngIf="isDark"></button>
-
 <router-outlet></router-outlet>
