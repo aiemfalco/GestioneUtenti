@@ -1,3 +1,5 @@
+Seleziona un tema: <p-select [options]="themes" optionLabel="label" optionValue="value" [ngModel]="actualTheme" (ngModelChange)="changeTheme($event)" />
+
 <div class="UserList">
 <p-table [value] = "users" dataKey = "id">
     <ng-template #header>

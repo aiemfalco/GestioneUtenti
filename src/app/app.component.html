@@ -1,5 +1,4 @@
-
-<p-select [options]="themes" optionLabel="label" optionValue="value" [ngModel]="actualTheme" (ngModelChange)="changeTheme($event)" />
+{{counter()}}
 <button pButton type="button" icon="pi pi-moon" (click)="toggleTheme()" *ngIf="!isDark"></button>
 <button pButton type="button" icon="pi pi-sun" (click)="toggleTheme()" *ngIf="isDark"></button>
 
