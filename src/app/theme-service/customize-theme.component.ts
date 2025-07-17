@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { ThemeService } from "./theme-service";
 import { CommonModule } from "@angular/common";
@@ -13,14 +13,16 @@ interface Theme {
         backgroundColor: string;
         textColor?: string;
     };
+    custom: boolean;
 }
 @Component({
   selector: 'customize-theme',
   standalone: true,
   imports: [CommonModule, FormsModule, InputTextModule, ColorPickerModule, ButtonModule],
-  templateUrl: './customize-theme.html'
+  templateUrl: './customize-theme.html',
+  styleUrl: './customize-theme.css'
 })
-export class CustomizeTheme {
+export class CustomizeTheme{
 
     newThemeLabel: string = '';
     newPrimaryColor: string = '';
@@ -35,17 +37,24 @@ export class CustomizeTheme {
             return;
         }
 
-        const newTheme: Theme = {
+        const newTheme = {
         label: this.newThemeLabel,
         value: {
             primaryColor: this.newPrimaryColor,
             backgroundColor: this.newBackgroundColor,
             textColor: this.newTextColor
-        }
+        },
+        custom: true
     };
         this._themeService.themes.push(newTheme);
         console.log(this._themeService.themes);
-        //this.newThemeLabel = '';
+        this.saveCustomThemesToLocalStorage();
         this._router.navigate(['/users']);
-}
+    }
+
+    saveCustomThemesToLocalStorage() {
+        const customThemes = this._themeService.themes.filter(t => t.custom);
+        localStorage.setItem('customThemes', JSON.stringify(customThemes));
+        console.log(customThemes);
+    }
 }

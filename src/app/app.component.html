@@ -1,4 +1,6 @@
 <a [routerLink]="['/customizetheme']">Personalizza il tuo tema</a>
+Seleziona un tema: <p-select [options]="themes" optionLabel="label" optionValue="value" [ngModel]="actualTheme" (ngModelChange)="changeTheme($event)" />
+<button pButton icon="pi pi-trash" class="p-button-danger" (click)="clearCustomThemes()"></button>
 <button pButton type="button" icon="pi pi-moon" (click)="toggleTheme()" *ngIf="!isDark"></button>
 <button pButton type="button" icon="pi pi-sun" (click)="toggleTheme()" *ngIf="isDark"></button>
 <router-outlet></router-outlet>

@@ -1,16 +1,26 @@
 <h2>Personalizza il tuo tema: </h2>
 <div class = "CustomizeTheme">
+    <div class = "form">
     <label>Nome tema: </label>
     <input id = "label" type="text" pInputText [(ngModel)]="newThemeLabel"/>
+    </div>
 
+    <div class = "form">
     <label>Colore primario: </label>
-    <p-colorPicker [(ngModel)]="newPrimaryColor" ></p-colorPicker>
+    <p-colorPicker [(ngModel)]="newPrimaryColor"></p-colorPicker>
+    </div>
 
+    <div class = "form">
     <label>Colore sfondo: </label>
     <p-colorPicker [(ngModel)]="newBackgroundColor"></p-colorPicker>
+    </div>
 
+    <div class = "form">
     <label>Colore testo(opzionale): </label>
     <p-colorPicker [(ngModel)]="newTextColor"></p-colorPicker>
+    </div>
     
+    <div class = "form">
     <button pButton type="button" label = "Salva impostazioni" (click) = "saveCustomTheme()"  icon="pi pi-save"></button>
+    </div>
 </div>
