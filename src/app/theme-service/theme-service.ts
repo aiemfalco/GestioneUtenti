@@ -6,13 +6,13 @@ import Lara from '@primeng/themes/lara';
 import Material from '@primeng/themes/material';
 import Nora from '@primeng/themes/nora'
 /* servizio */
-
 interface Theme {
     label: string;
     value: {
         primaryColor: string; 
         backgroundColor: string;
         textColor?: string;
+        backgroundButtonColor?: string;
     };
     custom: boolean;
 }
@@ -30,22 +30,17 @@ export class ThemeService {
         { label: 'MyPreset', value: MyPreset, custom: true }
     ];
 
-  //   async changeTheme(preset: object) {
-  //     try {
-  //       await usePreset(preset);
-  //       this.actualTheme = preset;
-  //     } catch (err) {
-  //       console.error('Errore nel cambio preset:', err);
-  //     }
-  // }
-
     async changeTheme(preset: Theme) {
+      console.log("preset intero:", preset);
+      console.log("typeof preset.custom:", typeof preset.custom, "| valore:", preset.custom);
       try {
-          if (preset.custom) {
-            console.log("dentro if(preset.custom)...");
+          if (preset.custom) { 
+            console.log(preset.label, "is a custom theme");
             this.applyCustomTheme(preset.value);
           } else {
-            await usePreset(preset);
+            console.log(preset.label, "is a standard theme ", preset.value);
+            this.resetCustomThemeVariables(); // rimuovo le variabili css dal dom(sovrascrivono lo stile del preset )
+            await usePreset(preset.value);
           }
           this.actualTheme = preset;
         } catch (err) {
@@ -55,9 +50,17 @@ export class ThemeService {
 
     applyCustomTheme(theme: Theme['value']) {
       if (!theme) return;
-      console.log(this.actualTheme);
       document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
       document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
       document.documentElement.style.setProperty('--text-color', theme.textColor || '#000');
+      document.documentElement.style.setProperty('--background-button-color', theme.backgroundButtonColor || '#000');
   }
+
+    resetCustomThemeVariables() {
+      const root = document.documentElement;
+      root.style.removeProperty('--primary-color');
+      root.style.removeProperty('--background-color');
+      root.style.removeProperty('--text-color');
+      root.style.removeProperty('--background-button-color');
+    }
 }

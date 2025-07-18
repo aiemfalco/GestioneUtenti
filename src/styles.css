@@ -1,5 +1,18 @@
 @import 'primeicons/primeicons.css';
 
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--background-button-color);
+  /* border-color: var(--primary-color); */
+}
+
+/* da custom a standard theme togliere le css variables */
+
+/* setting per la dark mode */
 body.dark-mode {
   --surface-a: #1e1e1e;
   --surface-b: #2c2c2c;
@@ -31,11 +44,11 @@ button {
   margin-left: 20px;
   margin-top: 5px;
   padding: 5px 10px;
-  border-radius: 6px;
+  border-radius: 6px;  
   border: none;
-  cursor: pointer;
-  background-color: #007bff;
-}
+  cursor: pointer; 
+  background-color: rgb(47, 19, 209);
+} 
   
 button:hover {
     background-color: #0275f0;

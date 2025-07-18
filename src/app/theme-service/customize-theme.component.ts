@@ -12,6 +12,7 @@ interface Theme {
         primaryColor: string; 
         backgroundColor: string;
         textColor?: string;
+        backgroundButtonColor?: string;
     };
     custom: boolean;
 }
@@ -28,6 +29,7 @@ export class CustomizeTheme{
     newPrimaryColor: string = '';
     newBackgroundColor: string = '';
     newTextColor: string = '';
+    newBackgroundButtonColor: string = '';
 
     constructor(private _themeService: ThemeService, private _router: Router) {}
 
@@ -37,24 +39,25 @@ export class CustomizeTheme{
             return;
         }
 
-        const newTheme = {
+        const newTheme: Theme = {
         label: this.newThemeLabel,
         value: {
             primaryColor: this.newPrimaryColor,
             backgroundColor: this.newBackgroundColor,
-            textColor: this.newTextColor
+            textColor: this.newTextColor,
+            backgroundButtonColor: this.newBackgroundButtonColor
         },
         custom: true
     };
+        console.log("Il nuovo tema è custom: ", newTheme.custom, typeof(newTheme.custom));
         this._themeService.themes.push(newTheme);
-        console.log(this._themeService.themes);
         this.saveCustomThemesToLocalStorage();
         this._router.navigate(['/users']);
+        console.log(this._themeService.themes); 
     }
 
     saveCustomThemesToLocalStorage() {
         const customThemes = this._themeService.themes.filter(t => t.custom);
         localStorage.setItem('customThemes', JSON.stringify(customThemes));
-        console.log(customThemes);
     }
 }

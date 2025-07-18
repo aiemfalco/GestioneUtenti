@@ -54,7 +54,8 @@ export class AppComponent implements OnInit {
         document.body.classList.add('dark-mode');
       }
       const defaultTheme = 'MyPreset'; //const storageItem = localStorage.getItem('theme');
-      this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)?.value);
+      //this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)?.value);
+      this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)!);
 
       // voglio temi standard e custom all'avvio
       const customThemes = this.getCustomThemesFromLocalStorage();
