@@ -31,14 +31,14 @@ export class ThemeService {
     ];
 
     async changeTheme(preset: Theme) {
-      console.log("preset intero:", preset);
-      console.log("typeof preset.custom:", typeof preset.custom, "| valore:", preset.custom);
+      // console.log("preset intero:", preset);
+      // console.log("typeof preset.custom:", typeof preset.custom, "| valore:", preset.custom);
       try {
           if (preset.custom) { 
-            console.log(preset.label, "is a custom theme");
+            // console.log(preset.label, "is a custom theme");
             this.applyCustomTheme(preset.value);
           } else {
-            console.log(preset.label, "is a standard theme ", preset.value);
+            // console.log(preset.label, "is a standard theme ", preset.value);
             this.resetCustomThemeVariables(); // rimuovo le variabili css dal dom(sovrascrivono lo stile del preset )
             await usePreset(preset.value);
           }
@@ -54,7 +54,7 @@ export class ThemeService {
       document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
       document.documentElement.style.setProperty('--text-color', theme.textColor || '#000');
       document.documentElement.style.setProperty('--background-button-color', theme.backgroundButtonColor || '#000');
-  }
+    }
 
     resetCustomThemeVariables() {
       const root = document.documentElement;

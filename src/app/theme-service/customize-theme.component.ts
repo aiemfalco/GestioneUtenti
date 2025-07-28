@@ -49,11 +49,11 @@ export class CustomizeTheme{
         },
         custom: true
     };
-        console.log("Il nuovo tema è custom: ", newTheme.custom, typeof(newTheme.custom));
+        // console.log("Il nuovo tema è custom: ", newTheme.custom, typeof(newTheme.custom));
         this._themeService.themes.push(newTheme);
         this.saveCustomThemesToLocalStorage();
         this._router.navigate(['/users']);
-        console.log(this._themeService.themes); 
+        // console.log(this._themeService.themes); 
     }
 
     saveCustomThemesToLocalStorage() {

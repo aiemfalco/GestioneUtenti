@@ -1,10 +1,8 @@
-<div class = "UserCreate">
-  <h2>Crea un nuovo utente</h2>
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<h2>Crea un nuovo utente</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="form-user">
     <app-my-autocomplete formControlName="name" [suggestions] = "names_suggested" placeholder = "Nome"></app-my-autocomplete>
     <app-my-autocomplete formControlName="surname" placeholder = "Cognome"></app-my-autocomplete>
     <app-my-autocomplete formControlName="email" placeholder = "Email"></app-my-autocomplete>
     <app-my-autocomplete formControlName="phone" placeholder = "Telefono"></app-my-autocomplete>
   <p-button label="Salva" type="submit" [disabled]="userForm.invalid"></p-button>
   </form>
-</div>

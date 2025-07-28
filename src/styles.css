@@ -7,21 +7,49 @@ body {
 
 button {
   background-color: var(--background-button-color);
-  /* border-color: var(--primary-color); */
 }
 
-/* da custom a standard theme togliere le css variables */
+.user-list-table,
+.user-list-table .p-datatable,
+.user-list-table .p-datatable-wrapper,
+.user-list-table .p-datatable-thead > tr > th,
+.user-list-table .p-datatable-tbody > tr > td {
+  background-color: var(--background-color) !important; /* necessario per forzare lo stile di primeng che ovviamente sono selettori forti */
+  color: var(--text-color) !important;
+}
+
+.user-list-table .p-button,
+.form-user .p-button,
+.customize-theme button {
+  background-color: var(--background-button-color) !important;
+  color: var(--text-color) !important;
+}
+
+/* .customize-theme input {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.customize-theme .p-colorpicker {
+  background-color: var(--background-button-color);
+}
+
+.customize-theme .p-colorpicker-preview {
+  background-color: var(--background-button-color);
+}  */
 
 /* setting per la dark mode */
 body.dark-mode {
   --surface-a: #1e1e1e;
   --surface-b: #2c2c2c;
   --text-color: white;
-  background-color: var(--surface-a);
+  background-color: black;
+  /* background-color: var(--surface-a); */
   color: var(--text-color);
 
 }
 
+/* global styles */
 h2 {
     font-family: helvetica;
     font-size: 20px;
@@ -68,4 +96,4 @@ input {
   box-sizing: border-box;
   border-radius: 6px;
   border: 1px solid black;
-  }
+}

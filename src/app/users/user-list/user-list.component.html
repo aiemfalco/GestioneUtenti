@@ -1,5 +1,5 @@
-<div class="UserList">
-<p-table [value] = "users" dataKey = "id">
+
+<p-table [value] = "users" dataKey = "id" class="user-list-table">
     <ng-template #header>
         <tr>
             <th>Nome</th>
@@ -28,10 +28,7 @@
         </tr>
     </ng-template>
     <ng-template #footer>
-        <div class = "footerUserList">
         Vuoi aggiungere un nuovo utente?
         <p-button label = "Crea" [routerLink]="['/users/create']" />
-        </div>
     </ng-template>
 </p-table>
-</div>

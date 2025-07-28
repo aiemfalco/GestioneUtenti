@@ -44,22 +44,30 @@ export class AppComponent implements OnInit {
   toggleTheme() {
     this.isDark = !this.isDark;
     document.body.classList.toggle('dark-mode', this.isDark);
-    localStorage.setItem('dark-mode', this.isDark ? 'true' : 'false');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('dark-mode', this.isDark ? 'true' : 'false');
+    }
   }
 
   ngOnInit(): void {
-      this._primeng.ripple.set(true);
-      this.isDark = localStorage.getItem('dark-mode') === 'true';
-      if (this.isDark) {
-        document.body.classList.add('dark-mode');
-      }
-      const defaultTheme = 'MyPreset'; //const storageItem = localStorage.getItem('theme');
-      //this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)?.value);
-      this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)!);
+     if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+        this._primeng.ripple.set(true);
 
-      // voglio temi standard e custom all'avvio
-      const customThemes = this.getCustomThemesFromLocalStorage();
-      this._themeService.themes = [...this._themeService.themes, ...customThemes]; 
+        this.isDark = localStorage.getItem('dark-mode') === 'true';
+        if (this.isDark) {
+          document.body.classList.add('dark-mode');
+        }
+
+        const defaultTheme = 'MyPreset'; //const storageItem = localStorage.getItem('theme');
+        //this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)?.value);
+        this._themeService.changeTheme(this._themeService.themes.find(theme => theme.label === defaultTheme)!);
+
+        // voglio temi standard e custom all'avvio
+        const customThemes = this.getCustomThemesFromLocalStorage();
+        this._themeService.themes = [...this._themeService.themes, ...customThemes]; 
+      } else {
+         console.warn('localStorage non è disponibile (forse sei in SSR((Server Side Rendering))?)');
+      }
     }
 
     getCustomThemesFromLocalStorage(): Theme[] {
@@ -79,7 +87,9 @@ export class AppComponent implements OnInit {
 
     clearCustomThemes() {
       this._themeService.themes = this.themes.filter(t => !t.custom);
-      localStorage.removeItem('customThemes');
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('customThemes');
+      }
     }
 
 }
